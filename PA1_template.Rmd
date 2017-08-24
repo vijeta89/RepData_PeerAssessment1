@@ -3,8 +3,8 @@ title: 'Reproducible Research : Peer Assessment 1'
 author: "Vijeta Bhambhani"
 date: "August 23, 2017"
 output:
-  html_document: default
-  word_document: default
+  html_document:
+    keep_md: true
 ---
 
 # Introduction
@@ -38,7 +38,7 @@ Show any code that is needed to
 Load the data (i.e. 𝚛𝚎𝚊𝚍.𝚌𝚜𝚟())
 
 
-```{r echo=TRUE}
+```{r}
 
 setwd("/Users/Vijeta/Documents/DataScience/Reproducible Research")
 library(ggplot2)
@@ -49,7 +49,7 @@ activity <- read.csv("activity.csv")
 
 Process/transform the data (if necessary) into a format suitable for your analysis
 
-```{r echo=TRUE}
+```{r}
 activity$day <- weekdays(as.Date(activity$date))
 activity$DateTime<- as.POSIXct(activity$date, format="%Y-%m-%d")
 
@@ -65,7 +65,7 @@ For this part of the assignment, you can ignore the missing values in the datase
 
 Calculate the total number of steps taken per day.
 
-```{r echo=TRUE}
+```{r}
 ## summarizing total steps per date
 steps_by_day <- aggregate(steps ~ date, activity, sum)
 
@@ -73,7 +73,7 @@ steps_by_day <- aggregate(steps ~ date, activity, sum)
 
 If you do not understand the difference between a histogram and a barplot, research the difference between them. Make a histogram of the total number of steps taken each day
 
-```{r echo=TRUE}
+```{r}
 ## Creating the historgram of total steps per day
 hist(steps_by_day$steps, main = paste("Total Steps Per Day"), col="green", xlab="Number of Steps")
 
@@ -81,14 +81,17 @@ hist(steps_by_day$steps, main = paste("Total Steps Per Day"), col="green", xlab=
 
 Calculate and report the mean and median of the total number of steps taken per day
 
-```{r echo=TRUE}
+```{r}
 ## Mean of Steps
 as.integer(mean(steps_by_day$steps))
+```
 
+```{r}
 ## Median of Steps
 as.integer(median(steps_by_day$steps))
-
 ```
+
+
 
 The average number of steps taken each day was 10,766 steps.
 
@@ -100,7 +103,7 @@ The median number of steps taken each day was 10,765 steps.
 
 Make a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
-```{r echo=TRUE}
+```{r}
 library(plyr)
 library(ggplot2)
 
@@ -108,25 +111,29 @@ library(ggplot2)
 clean <- activity[!is.na(activity$steps),]
 
 names(clean)
+```
 
+```{r}
 ##create average number of steps per interval
 intervalTable <- ddply(clean, .(interval), summarize, Avg = mean(steps))
 
 ##Create line plot of average number of steps per interval
 p <- ggplot(intervalTable, aes(x=interval, y=Avg), xlab = "Interval", ylab="Average Number of Steps")
 p + geom_line()+xlab("Interval")+ylab("Average Number of Steps")+ggtitle("Average Number of Steps per Interval")
-
-
 ```
+
+
 
 Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
-```{r echo=TRUE}
+```{r}
 ##Maximum steps by interval
 maxSteps <- max(intervalTable$Avg)
 
 maxSteps
+```
 
+```{r}
 ##Which interval contains the maximum average number of steps
 intervalTable[intervalTable$Avg==maxSteps,1]
 
@@ -144,7 +151,7 @@ Note that there are a number of days/intervals where there are missing values (c
 
 Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with 𝙽𝙰.)
 
-```{r echo=TRUE}
+```{r}
 ##Number of NAs in dataset
 nrow(activity[is.na(activity$steps),])
 ```
@@ -158,7 +165,7 @@ Devise a strategy for filling in all of the missing values in the dataset. The s
 My strategy for filling in NAs will be to substitute the NA with average 5-minute interval based on the day of the week.
 
 
-```{r echo=TRUE}
+```{r}
 ## Create the average number of steps per weekday and interval
 avgTable <- ddply(clean, .(interval, day), summarize, Avg = mean(steps))
 
@@ -173,7 +180,7 @@ newdata<-merge(nadata, avgTable, by=c("interval", "day"))
 Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
 
-```{r echo=TRUE}
+```{r}
 ## Create dataset with substitution from imputation
 dataimpute<- activity[is.na(activity$steps),]
 ## Merge NA data with average weekday interval for substitution
@@ -190,18 +197,26 @@ mergeData <- rbind(clean, newdata2)
 
 Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day.
 
-```{r echo=TRUE}
+```{r}
 ##Create sum of steps per date to compare with step 1
 sumTable2 <- aggregate(steps ~ date, mergeData,sum)
 colnames(sumTable2)<- c("Date", "Steps")
+```
 
 
+```{r}
 ## Mean of Steps with NA data taken care of
 as.integer(mean(sumTable2$Steps))
+```
 
+
+```{r}
 ## Median of Steps with NA data taken care of
 as.integer(median(sumTable2$Steps))
+```
 
+
+```{r}
 ## Creating the histogram of total steps per day, categorized by data set to show impact
 hist(sumTable2$Steps, breaks=5, xlab="Steps", main = "Total Steps per Day Imputed vs Excluding NA", col="red")
 hist(steps_by_day$steps, breaks=5, xlab="Steps", main = "Total Steps per Day Imputed vs Excluding NA", col="blue",add=T)
@@ -226,7 +241,7 @@ For this part the 𝚠𝚎𝚎𝚔𝚍𝚊𝚢𝚜() function may be of some hel
 
 Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
 
-```{r echo=TRUE}
+```{r}
 ## Create new factor variable in the dataset based on the days of the week
 mergeData$DayCategory <- ifelse(mergeData$day %in% c("Saturday", "Sunday"), "Weekend", "Weekday")
 ```
@@ -234,7 +249,7 @@ mergeData$DayCategory <- ifelse(mergeData$day %in% c("Saturday", "Sunday"), "Wee
 Make a panel plot containing a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
 
-```{r echo=TRUE}
+```{r}
 library(lattice) 
 
 ## Summarize data by interval and type of day
@@ -247,6 +262,4 @@ xyplot(Avg~interval|DayCategory, data=intervalTable2, type="l",  layout = c(1,2)
 ```
 
 Yes, the step activity is different based on whether the day is a weekend or a weekday. This may be due to people having more time and energy to engage in more activity beyond the normal 8-5 working hours during the week.  
-
-## used the Knit button in RStudio to create document
 
