@@ -247,14 +247,5 @@ xyplot(Avg~interval|DayCategory, data=intervalTable2, type="l",  layout = c(1,2)
 
 Yes, the step activity is different based on whether the day is a weekend or a weekday. This may be due to people having more time and energy to engage in more activity beyond the normal 8-5 working hours during the week.  
 
-
-```{r echo=TRUE}
-library(knitr)
-setwd("/Users/Vijeta/Documents/DataScience/Reproducible Research")
-spin('PA1_template.Rmd', knit = FALSE)
-browseURL("PA1_template.html")
-
-```
-```
-```
+## used the Knit button in RStudio to create document
 
