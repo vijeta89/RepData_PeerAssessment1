@@ -93,7 +93,7 @@ If you do not understand the difference between a histogram and a barplot, resea
 hist(steps_by_day$steps, main = paste("Total Steps Per Day"), col="green", xlab="Number of Steps")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](PA1_template_files/figure-html/Steps_by_Day-1.png)<!-- -->
 
 Calculate and report the mean and median of the total number of steps taken per day
 
@@ -154,7 +154,7 @@ p <- ggplot(intervalTable, aes(x=interval, y=Avg), xlab = "Interval", ylab="Aver
 p + geom_line()+xlab("Interval")+ylab("Average Number of Steps")+ggtitle("Average Number of Steps per Interval")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+![](PA1_template_files/figure-html/Average_number_of_steps_per_interval-1.png)<!-- -->
 
 
 
@@ -285,7 +285,7 @@ hist(steps_by_day$steps, breaks=5, xlab="Steps", main = "Total Steps per Day Imp
 legend("topright", c("Imputed Data", "Non-NA Data"), fill=c("red", "blue") )
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+![](PA1_template_files/figure-html/Total_Steps_perday_Imputed_vs_nonNA-1.png)<!-- -->
 
 
 Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
@@ -332,7 +332,7 @@ xyplot(Avg~interval|DayCategory, data=intervalTable2, type="l",  layout = c(1,2)
        ylab="Average Number of Steps", xlab="Interval")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
+![](PA1_template_files/figure-html/Average_Steps_Interval_Type_Day-1.png)<!-- -->
 
 Yes, the step activity is different based on whether the day is a weekend or a weekday. This may be due to people having more time and energy to engage in more activity beyond the normal 8-5 working hours during the week.  
 

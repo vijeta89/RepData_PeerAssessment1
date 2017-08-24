@@ -73,7 +73,7 @@ steps_by_day <- aggregate(steps ~ date, activity, sum)
 
 If you do not understand the difference between a histogram and a barplot, research the difference between them. Make a histogram of the total number of steps taken each day
 
-```{r}
+```{r Steps_by_Day}
 ## Creating the historgram of total steps per day
 hist(steps_by_day$steps, main = paste("Total Steps Per Day"), col="green", xlab="Number of Steps")
 
@@ -113,7 +113,7 @@ clean <- activity[!is.na(activity$steps),]
 names(clean)
 ```
 
-```{r}
+```{r Average_number_of_steps_per_interval}
 ##create average number of steps per interval
 intervalTable <- ddply(clean, .(interval), summarize, Avg = mean(steps))
 
@@ -216,7 +216,7 @@ as.integer(median(sumTable2$Steps))
 ```
 
 
-```{r}
+```{r Total_Steps_perday_Imputed_vs_nonNA}
 ## Creating the histogram of total steps per day, categorized by data set to show impact
 hist(sumTable2$Steps, breaks=5, xlab="Steps", main = "Total Steps per Day Imputed vs Excluding NA", col="red")
 hist(steps_by_day$steps, breaks=5, xlab="Steps", main = "Total Steps per Day Imputed vs Excluding NA", col="blue",add=T)
@@ -249,7 +249,7 @@ mergeData$DayCategory <- ifelse(mergeData$day %in% c("Saturday", "Sunday"), "Wee
 Make a panel plot containing a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
 
-```{r}
+```{r Average_Steps_Interval_Type_Day}
 library(lattice) 
 
 ## Summarize data by interval and type of day
