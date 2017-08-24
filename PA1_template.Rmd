@@ -1,8 +1,10 @@
 ---
-title: "Reproducible Research : Peer Assessment 1"
+title: 'Reproducible Research : Peer Assessment 1'
 author: "Vijeta Bhambhani"
 date: "August 23, 2017"
-output: html_document 
+output:
+  html_document: default
+  word_document: default
 ---
 
 # Introduction
@@ -41,7 +43,6 @@ Load the data (i.e. 𝚛𝚎𝚊𝚍.𝚌𝚜𝚟())
 setwd("/Users/Vijeta/Documents/DataScience/Reproducible Research")
 library(ggplot2)
 library(plyr)
-
 activity <- read.csv("activity.csv")
 ```
 
