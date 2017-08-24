@@ -255,5 +255,7 @@ spin('PA1_template.Rmd', knit = FALSE)
 browseURL("PA1_template.html")
 
 ```
-```
+
+
+
 
